@@ -14,7 +14,7 @@ if (Test-Path dist) { Remove-Item -Recurse -Force dist }
 if (Test-Path build) { Remove-Item -Recurse -Force build }
 
 # Optional: icon path if available
-$iconPath = Join-Path "app" "ui" "app.ico"
+$iconPath = Join-Path (Join-Path "app" "ui") "app.ico"
 $iconArg = ""
 if (Test-Path $iconPath) { $iconArg = "--icon `"$iconPath`"" }
 

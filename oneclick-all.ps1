@@ -28,6 +28,7 @@ pip install pytest pyinstaller
 # 4) Run tests if present
 if (Test-Path "$repo\tests") {
     Write-Host "Running tests..."
+    $env:PYTHONPATH = $repo
     pytest -q
 }
 
