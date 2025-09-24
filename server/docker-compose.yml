@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16
+    container_name: farmapp-db
+    environment:
+      - POSTGRES_USER=farmapp
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-change-me}
+      - POSTGRES_DB=farmapp
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+    networks:
+      - web
+
+  api:
+    build: ./api
+    container_name: farmapp-api
+    environment:
+      - APP_ENV=prod
+      - LICENSE_ISS=ahmedhussein.online
+      - LICENSE_AUD=FarmApp
+      - LICENSE_PRIVKEY_PATH=/run/keys/private.pem
+      - LICENSE_PUBKEY_PATH=/run/keys/public.pem
+      - DATABASE_URL=postgresql+psycopg://farmapp:${POSTGRES_PASSWORD:-change-me}@db:5432/farmapp
+      - PAYMOB_HMAC_KEY=${PAYMOB_HMAC_KEY}
+      - PAYMOB_API_KEY=${PAYMOB_API_KEY}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-change-this}
+      - ADMIN_SESSION_SECRET=${ADMIN_SESSION_SECRET:-please-change}
+    depends_on:
+      - db
+    volumes:
+      - ./data/keys:/run/keys:ro
+    networks:
+      - web
+
+  caddy:
+    image: caddy:2
+    container_name: farmapp-caddy
+    depends_on:
+      - api
+    volumes:
+      - ./Caddyfile.api:/etc/caddy/Caddyfile:ro
+      - ./updates:/srv:ro
+    networks:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+
+networks:
+  web:
+    driver: bridge

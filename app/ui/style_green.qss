@@ -1,0 +1,33 @@
+/* Green theme: corporate green accents */
+
+QWidget { background: #f6fbf7; color: #0d1b0f; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12pt; }
+QMainWindow { background: #edf7ef; }
+
+QLabel { color: #0d1b0f; }
+
+QLineEdit, QComboBox, QDateEdit, QTextEdit, QSpinBox, QDoubleSpinBox {
+    background: #ffffff; border: 1px solid #d9eadb; border-radius: 8px; padding: 8px 10px; min-height: 34px;
+}
+QLineEdit:focus, QComboBox:focus, QDateEdit:focus, QTextEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus { border: 2px solid #22c55e; }
+QLineEdit::placeholder { color: #9ca3af; }
+
+QPushButton { background: #22c55e; color: #ffffff; border: none; border-radius: 8px; padding: 8px 14px; font-weight: 600; min-height: 34px; }
+QPushButton:hover { background: #16a34a; }
+QPushButton:pressed { background: #15803d; }
+QPushButton[role="secondary"], QPushButton[level="secondary"] { background: #6b7280; }
+QPushButton[role="secondary"]:hover, QPushButton[level="secondary"]:hover { background: #4b5563; }
+QPushButton[role="danger"], QPushButton[level="danger"] { background: #ef4444; }
+QPushButton[role="danger"]:hover, QPushButton[level="danger"]:hover { background: #dc2626; }
+
+QTabWidget::pane { border: 1px solid #d9eadb; border-radius: 8px; background: #ffffff; margin-top: 10px; }
+QTabBar::tab { background: #eef7f0; color: #0d1b0f; padding: 8px 16px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-right: 4px; }
+QTabBar::tab:selected { background: #ffffff; color: #16a34a; border-bottom: 2px solid #22c55e; font-weight: 600; }
+
+QTableWidget, QTableView { background: #ffffff; border: 1px solid #d9eadb; border-radius: 8px; gridline-color: #d9eadb; alternate-background-color: #f6fbf7; }
+QHeaderView::section { background: #0d1b0f; color: #ffffff; padding: 8px 10px; border: none; font-weight: 600; }
+
+QGroupBox { border: 1px solid #d9eadb; border-radius: 8px; margin-top: 12px; }
+QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 6px; color: #0d1b0f; font-weight: 600; }
+
+QSplitter::handle { background: #d9eadb; width: 6px; }
+QMessageBox { background: #ffffff; }

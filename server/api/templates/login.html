@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيل الدخول - لوحة التراخيص</title>
+  <style>
+    body { font-family: sans-serif; background:#f7f7f7; }
+    .box { max-width:420px; margin:60px auto; background:#fff; padding:24px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,.08); }
+    .row { margin:12px 0; }
+    label { display:block; margin-bottom:6px; }
+    input[type=text], input[type=password] { width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; }
+    button { padding:10px 16px; background:#1976d2; color:#fff; border:none; border-radius:6px; cursor:pointer; }
+    .error { color:#c62828; margin:8px 0; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>تسجيل الدخول</h2>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    <form method="post" action="/admin/login">
+      <div class="row">
+        <label>اسم المستخدم</label>
+        <input type="text" name="username" value="admin" />
+      </div>
+      <div class="row">
+        <label>كلمة المرور</label>
+        <input type="password" name="password" value="admin" />
+      </div>
+      <div class="row">
+        <button type="submit">دخول</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

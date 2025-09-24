@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>لوحة التراخيص</title>
+  <style>
+    body { font-family: sans-serif; background:#f7f7f7; }
+    .container { max-width:1100px; margin:20px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,.08); }
+    h1 { margin-top:0; }
+    table { border-collapse: collapse; width:100%; margin:12px 0; }
+    th, td { border:1px solid #e0e0e0; padding:8px; text-align:right; }
+    th { background:#fafafa; }
+    .row { margin:12px 0; }
+    input[type=text], input[type=number] { padding:8px; border:1px solid #ddd; border-radius:6px; }
+    button { padding:8px 12px; background:#1976d2; color:#fff; border:none; border-radius:6px; cursor:pointer; }
+    .muted { color:#666; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; }
+    .ok { background:#e8f5e9; color:#2e7d32; }
+    .bad { background:#ffebee; color:#c62828; }
+    .actions form { display:inline-block; margin-left:6px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; }
+    a { color:#1976d2; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1>لوحة التراخيص</h1>
+      <div><a href="/admin/logout">خروج</a></div>
+    </div>
+    <p class="muted">إجمالي التراخيص: <b>{{ total_licenses }}</b> — التفعيلات: <b>{{ total_activations }}</b> — الملغاة: <b>{{ total_revoked }}</b></p>
+
+    <h2>إنشاء ترخيص جديد</h2>
+    <form method="post" action="/admin/license/create">
+      <div class="row">
+        <label>مفتاح الترخيص</label>
+        <input type="text" name="license_key" placeholder="FA-XXXX-YYYY" required />
+      </div>
+      <div class="row">
+        <label>العميل</label>
+        <input type="text" name="customer" placeholder="Customer" />
+      </div>
+      <div class="row">
+        <label>الخطة</label>
+        <input type="text" name="plan" value="standard" />
+      </div>
+      <div class="row">
+        <label>حد الأجهزة</label>
+        <input type="number" name="limit" value="1" min="1" />
+      </div>
+      <div class="row">
+        <label>نشط؟</label>
+        <select name="active"><option value="1" selected>نعم</option><option value="0">لا</option></select>
+      </div>
+      <div class="row">
+        <button type="submit">حفظ</button>
+      </div>
+    </form>
+
+    <h2>التراخيص</h2>
+    <table>
+      <thead><tr><th>المفتاح</th><th>العميل</th><th>الخطة</th><th>الحد</th><th>نشط</th><th>الأجهزة المستخدمة</th><th>إجراءات</th></tr></thead>
+      <tbody>
+        {% for key, lic in licenses.items() %}
+        <tr>
+          <td><code>{{ key }}</code></td>
+          <td>{{ lic.get('customer') }}</td>
+          <td>{{ lic.get('plan') }}</td>
+          <td>{{ lic.get('limit') }}</td>
+          <td>{% if lic.get('active') %}<span class="badge ok">نشط</span>{% else %}<span class="badge bad">موقوف</span>{% endif %}</td>
+          <td>{{ (lic.get('used_hwids') or []) | length }}</td>
+          <td class="actions">
+            <form method="post" action="/admin/license/toggle">
+              <input type="hidden" name="license_key" value="{{ key }}" />
+              {% if lic.get('active') %}
+                <input type="hidden" name="active" value="0" />
+                <button type="submit">إيقاف</button>
+              {% else %}
+                <input type="hidden" name="active" value="1" />
+                <button type="submit">تشغيل</button>
+              {% endif %}
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>التفعيلات النشطة</h2>
+    <table>
+      <thead><tr><th>التوكن</th><th>المفتاح</th><th>HWID</th><th>إجراءات</th></tr></thead>
+      <tbody>
+        {% for token, info in activations.items() %}
+        <tr>
+          <td style="max-width:360px; overflow-wrap:anywhere"><code>{{ token }}</code></td>
+          <td><code>{{ info.get('license_key') }}</code></td>
+          <td>{{ info.get('hwid') }}</td>
+          <td class="actions">
+            <form method="post" action="/admin/token/revoke">
+              <input type="hidden" name="token" value="{{ token }}" />
+              <button type="submit">إبطال</button>
+            </form>
+            <form method="post" action="/admin/activation/remove">
+              <input type="hidden" name="token" value="{{ token }}" />
+              <button type="submit">حذف من القائمة</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

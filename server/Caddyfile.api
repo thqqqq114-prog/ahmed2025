@@ -1,0 +1,51 @@
+ahmedhussein.online {
+    encode gzip
+
+    # Redirect /api to admin dashboard
+    @api_root path /api
+    redir @api_root /api/admin 302
+
+    # Normalize trailing slashes under /api/admin
+    @api_admin_slash path /api/admin/
+    redir @api_admin_slash /api/admin 302
+    @api_admin_login_slash path /api/admin/login/
+    redir @api_admin_login_slash /api/admin/login 302
+
+    # Canonicalize old admin paths to /api-prefixed
+    @admin_root path /admin
+    redir @admin_root /api/admin 302
+    @admin_login_root path /admin/login
+    redir @admin_login_root /api/admin/login 302
+
+    # Serve desktop updates under /updates (no subdomain)
+    handle /updates* {
+        root * /srv
+        file_server browse false
+    }
+
+    # API endpoints (keep /api prefix)
+    handle /api/v1/* {
+        reverse_proxy api:8000
+    }
+
+    # Admin under /api (strip /api before upstream)
+    handle_path /api/admin/* {
+        reverse_proxy api:8000
+    }
+
+    # Webhooks under /api (strip /api)
+    handle_path /api/webhook/* {
+        reverse_proxy api:8000
+    }
+
+    # Health under /api/ (strip /api)
+    handle_path /api/ {
+        reverse_proxy api:8000
+    }
+}
+
+# Redirect www to apex domain
+www.ahmedhussein.online {
+    encode gzip
+    redir https://ahmedhussein.online{uri} 308
+}

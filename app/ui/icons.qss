@@ -1,0 +1,9 @@
+/* Simple icon-like styling via emoji (can be replaced by real icons later) */
+QPushButton[text="تعريف الموردين"]::before { content: "👤 "; }
+QPushButton[text="إدارة الأصناف"]::before { content: "📦 "; }
+QPushButton[text="إدارة المصانع"]::before { content: "🏭 "; }
+QPushButton[text="متطلبات المصانع"]::before { content: "📝 "; }
+QPushButton[text="توريد المحاصيل"]::before { content: "🚚 "; }
+QPushButton[text="مدفوعات وسلف"]::before { content: "💵 "; }
+QPushButton[text="كشف حساب المورد"]::before { content: "📊 "; }
+QPushButton[text="المستخدمون"]::before { content: "👥 "; }

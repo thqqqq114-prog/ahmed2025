@@ -1,0 +1,33 @@
+/* Dark theme: high-contrast, subdued colors */
+
+QWidget { background-color: #0f172a; color: #e5e7eb; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12pt; }
+QMainWindow { background-color: #0b1220; }
+QLabel { color: #e5e7eb; }
+
+QLineEdit, QComboBox, QDateEdit, QTextEdit, QSpinBox, QDoubleSpinBox {
+    background: #111827; color: #e5e7eb; border: 1px solid #374151; border-radius: 8px; padding: 8px 10px; min-height: 34px;
+}
+QLineEdit:focus, QComboBox:focus, QDateEdit:focus, QTextEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus { border: 2px solid #60a5fa; }
+QLineEdit::placeholder { color: #9ca3af; }
+
+QPushButton { background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-weight: 600; min-height: 34px; }
+QPushButton:hover { background: #1d4ed8; }
+QPushButton:pressed { background: #1e40af; }
+QPushButton[role="secondary"], QPushButton[level="secondary"] { background: #6b7280; }
+QPushButton[role="secondary"]:hover, QPushButton[level="secondary"]:hover { background: #4b5563; }
+QPushButton[role="danger"], QPushButton[level="danger"] { background: #ef4444; }
+QPushButton[role="danger"]:hover, QPushButton[level="danger"]:hover { background: #dc2626; }
+
+QTabWidget::pane { border: 1px solid #374151; border-radius: 8px; background: #0b1220; margin-top: 10px; }
+QTabBar::tab { background: #111827; color: #e5e7eb; padding: 8px 16px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-right: 4px; }
+QTabBar::tab:selected { background: #0b1220; color: #93c5fd; border-bottom: 2px solid #60a5fa; font-weight: 600; }
+
+QTableWidget, QTableView { background: #0b1220; color: #e5e7eb; border: 1px solid #374151; border-radius: 8px; gridline-color: #374151; alternate-background-color: #111827; }
+QHeaderView::section { background: #1f2937; color: #e5e7eb; padding: 8px 10px; border: none; font-weight: 600; }
+QTableView::item:selected, QTableWidget::item:selected { background: #1e3a8a; color: #e5e7eb; }
+
+QGroupBox { border: 1px solid #374151; border-radius: 8px; margin-top: 12px; }
+QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 6px; color: #e5e7eb; font-weight: 600; }
+
+QSplitter::handle { background: #374151; width: 6px; }
+QMessageBox { background: #0b1220; }

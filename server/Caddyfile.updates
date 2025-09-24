@@ -1,0 +1,25 @@
+updates.ahmedhussein.online {
+	encode gzip
+	root * /srv
+	file_server
+	# Force no directory listing for safety
+	@forbidden {
+		path_regexp pathlist ^/.+/$
+	}
+	respond @forbidden 403
+}
+
+api.ahmedhussein.online {
+	encode gzip
+	# Normalize trailing slashes on admin paths
+	@admin_slash {
+		path /admin/
+	}
+	@admin_login_slash {
+		path /admin/login/
+	}
+	redir @admin_slash /admin 302
+	redir @admin_login_slash /admin/login 302
+
+	reverse_proxy api:8000
+}

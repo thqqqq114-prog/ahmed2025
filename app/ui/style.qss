@@ -1,0 +1,107 @@
+/* التصميم العام للتطبيق */
+QWidget {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12pt;
+}
+
+/* تنسيق النوافذ الرئيسية */
+QMainWindow {
+    background-color: #e9ecef;
+}
+
+/* تنسيق الأزرار */
+QPushButton {
+    background-color: #4dabf7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px; /* أصغر قليلاً */
+    font-weight: bold;
+    min-height: 28px; /* تصغير الارتفاع */
+}
+
+/* حجم موحّد وصغير للأزرار السفلية في كل الصفحات */
+QWidget QPushButton[role="bottom"] {
+    min-height: 30px;
+    padding: 6px 10px;
+    font-size: 11pt;
+}
+
+QPushButton:hover {
+    background-color: #339af0;
+}
+
+QPushButton:pressed {
+    background-color: #228be6;
+}
+
+/* تنسيق الجداول */
+QTableWidget {
+    gridline-color: #dee2e6;
+    alternate-background-color: #f1f3f5;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+QHeaderView::section {
+    background-color: #4dabf7;
+    color: white;
+    padding: 6px;
+    border: none;
+    font-weight: bold;
+}
+
+QTableWidget::item {
+    padding: 6px;
+}
+
+/* تنسيق حقول الإدخال */
+QLineEdit, QComboBox, QDateEdit {
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px;
+    min-height: 30px;
+}
+
+QLineEdit:focus, QComboBox:focus, QDateEdit:focus {
+    border: 2px solid #4dabf7;
+}
+
+/* تنسيق علامات التبويب */
+QTabWidget::pane {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background: white;
+    margin-top: 10px;
+}
+
+QTabBar::tab {
+    background: #e9ecef;
+    color: #495057;
+    padding: 8px 16px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin-right: 2px;
+}
+
+QTabBar::tab:selected {
+    background: white;
+    color: #4dabf7;
+    border-bottom: 2px solid #4dabf7;
+    font-weight: bold;
+}
+
+/* تنسيق التسميات */
+QLabel {
+    color: #495057;
+    font-weight: 500;
+}
+
+/* تنسيق مربعات الرسائل */
+QMessageBox {
+    background-color: white;
+}

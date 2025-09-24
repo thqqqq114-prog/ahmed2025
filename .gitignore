@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Environments
+.env
+venv/
+.venv/
+
+# Build/Dist
+build/
+dist/
+
+# Logs & temp
+*.log
+*.bak
+*.tmp
+
+# App artifacts
+app/backups/
+app/data/*.db
+
+# Server data and heavy artifacts
+server/data/
+server/updates/win/*.exe
+server/updates/win/*.zip
+server/updates/win/*.msi
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
