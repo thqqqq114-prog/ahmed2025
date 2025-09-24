@@ -71,12 +71,13 @@ Write-Host "Pushing to origin/$branch (fast mode)..."
 git -C "$repo" -c http.version=HTTP/2 -c protocol.version=2 -c pack.threads=0 -c pack.compression=1 push origin $branch
 
 # 8) Launch the app (built EXE preferred, fallback to dev run)
+$env:FARMAPP_DEV = "1"  # enable dev license bypass for local run
 $exePath = Join-Path $repo "dist\FarmApp\FarmApp.exe"
 if (Test-Path $exePath) {
-    Write-Host "Launching built app: $exePath"
-    Start-Process -FilePath $exePath
+    Write-Host "Launching built app: $exePath (dev bypass ON)"
+    Start-Process -FilePath $exePath -Environment @{ FARMAPP_DEV = "1" }
 } else {
-    Write-Host "Built EXE not found, launching development app instead..."
+    Write-Host "Built EXE not found, launching development app instead (dev bypass ON)..."
     python -m app.main
 }
 

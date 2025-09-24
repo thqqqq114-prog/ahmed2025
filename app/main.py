@@ -38,17 +38,23 @@ def main() -> None:
 
     # التحقق من الترخيص قبل تسجيل الدخول
     from PySide6.QtWidgets import QMessageBox
-    client = LicenseClient()
-    token = client.get_saved_token()
-    if not client.verify_token(token):
-        dlg = LicenseDialog()
-        if dlg.exec() != LicenseDialog.Accepted or not dlg.ok:
-            QMessageBox.warning(None, "ترخيص غير موجود", "لا يمكن المتابعة بدون ترخيص صالح.")
-            sys.exit(0)
-        # تم الحفظ داخل activate، تحقق مرة أخرى للاطمئنان
-        if not client.is_valid():
-            QMessageBox.critical(None, "فشل التحقق", "الترخيص غير صالح أو فشل الاتصال بالخادم.")
-            sys.exit(0)
+    from os import getenv
+    # وضع المطور: تجاوز التحقق من الترخيص عند التفعيل عبر متغير بيئة أو إعداد قاعدة البيانات
+    dev_mode = (getenv('FARMAPP_DEV', '').lower() in ('1', 'true', 'yes'))
+    # السماح بالتبديل عبر الإعداد المخزن في قاعدة البيانات أيضًا
+    dev_mode = dev_mode or (((get_setting('dev_mode') or '').strip().lower()) in ('1', 'true', 'yes'))
+    if not dev_mode:
+        client = LicenseClient()
+        token = client.get_saved_token()
+        if not client.verify_token(token):
+            dlg = LicenseDialog()
+            if dlg.exec() != LicenseDialog.Accepted or not dlg.ok:
+                QMessageBox.warning(None, "ترخيص غير موجود", "لا يمكن المتابعة بدون ترخيص صالح.")
+                sys.exit(0)
+            # تم الحفظ داخل activate، تحقق مرة أخرى للاطمئنان
+            if not client.is_valid():
+                QMessageBox.critical(None, "فشل التحقق", "الترخيص غير صالح أو فشل الاتصال بالخادم.")
+                sys.exit(0)
 
     # عرض نافذة تسجيل الدخول
     login_dialog = LoginDialog()
